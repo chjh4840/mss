@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.88.1">
+	<title>Category Setting</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
+
+	<!-- Bootstrap core CSS -->
+	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+		
+		.button {
+		  background-color: black;
+		  border: none;
+		  color: white;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  font-size: 16px;
+		  margin: 4px 2px;
+		  cursor: pointer;
+		}
+	</style>
+
+
+	<!-- Custom styles for this template -->
+	<link href="/bootstrap/css/setting.css" rel="stylesheet">
+</head>
+
+<body>
+	<main>
+		<div class="flex-shrink-0 p-3 bg-white" style="width: 400px;" th:href="@{/}">
+			<ul class="list-unstyled ps-0" th:each="list : ${id_list}">
+				<li class="mb-1">
+					<input th:value="${list.name}" type="text" th:attr="id='#list_name'+${list.id}" size=30>
+					<input type="button" class="button rounded" value="삭제" style="float: right"
+						th:attr="onclick=|del('${list.id}')|">
+					<input type="button" class="button rounded" value="수정" style="float: right"
+						th:attr="onclick=|modify_m('${list.id}')|">
+				</li>
+				<li th:each="li : ${fid_list}" class="mb-1">
+					<span th:if="${list.id}==${li.f_id}">▷</span>
+					<input th:if="${list.id}==${li.f_id}" th:value="${li.name}" size=27 type="text"
+						th:attr="id='#li_name'+${li.id}">
+					<input th:if="${list.id}==${li.f_id}" type="button" class="button rounded" value="삭제"
+						style="float: right" th:attr="onclick=|del('${li.id}')|">
+					<input th:if="${list.id}==${li.f_id}" type="button" class="button rounded" value="수정"
+						style="float: right" th:attr="onclick=|modify_d('${li.id}')|">
+				</li>
+				<li class="mb-1">
+					<span>▷</span>
+					<input type="text" th:attr="id='#new_name'+${list.id}" size=27>
+					<input type="button" class="button rounded" value="추가" style="float: right; width:90px;"
+						th:attr="onclick=|add_d('${list.id}')|">
+				</li>
+			</ul>
+			<ul class="list-unstyled ps-0">
+				<li class="mb-1" >
+					<input type="text" id="#new_category" size=30>
+					<input type="button" class="button rounded" value="추가" style="float: right; width:90px;"
+						th:attr="onclick=|add_m()|">
+				</li>
+			</ul>
+		</div>
+	</main>
+	<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="/bootstrap/js/sidebars.js"></script>
+	<script>
+	function modify_m(id) {
+		let name = document.getElementById("#list_name"+id).value;
+		location.href ="setting/modify?id="+ id +"&name="+ name; 
+		window.close();
+		opener.location.href="javascript:reload();";
+	}	
+	function modify_d(id) {
+		let name = document.getElementById("#li_name"+id).value;
+		location.href ="setting/modify?id="+ id +"&name="+ name; 
+		window.close();
+		opener.location.href="javascript:reload();";
+	}	
+	function add_d(id) {
+		let name = document.getElementById("#new_name"+id).value;
+		location.href ="setting/add_d?id="+ id +"&name="+ name; 
+		window.close();
+		opener.location.href="javascript:reload();";
+	}
+	function add_m(id) {
+		let name = document.getElementById("#new_category").value;
+		location.href ="setting/add_m?name="+ name; 
+		window.close();
+		opener.location.href="javascript:reload();";
+	}
+	function del(id) {
+		location.href ="setting/delete?id="+ id;
+		window.close();
+		opener.location.href="javascript:reload();";
+	}	
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.mss.category.mapper.CategoryMapper"> 
+	<select id="select" resultType="CategoryVo"> 
+		SELECT ID, F_ID, NAME FROM CATEGORY ORDER BY ID
+	</select> 
+	
+	<select id="select_p" parameterType="int" resultType="CategoryVo" > 
+		SELECT ID, F_ID, NAME FROM CATEGORY WHERE F_ID = #{f_id}
+	</select>
+	
+	<select id="select_m" resultType="int" > 
+		SELECT MAX(ID) FROM CATEGORY
+	</select>
+	
+	<insert id="insert" parameterType="CategoryVo">
+		INSERT INTO CATEGORY(
+			ID,
+			F_ID,
+			NAME
+		) values (
+			#{id},
+			#{f_id},
+			#{name}
+		)
+	</insert>
+	
+	<update id="update" parameterType="CategoryVo">
+		UPDATE CATEGORY
+		   SET NAME = #{name}
+		 where ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM CATEGORY
+		 WHERE ID = #{id} 
+		    OR F_ID = #{id}
+	</delete>
+	
+</mapper>
